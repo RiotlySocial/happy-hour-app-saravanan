@@ -1,9 +1,12 @@
 import React, { Component } from 'react';
+import { BrowserRouter as Router, Route, Link } from "react-router-dom";
 import logo from './logo.svg';
 import './App.css';
+import AddRecipe from './components/addRecipe/addRecipe';
+import Home from './components/home/home';
 
 class App extends Component {
-  render() {
+  /*render() {
     return (
       <div className="App">
         <header className="App-header">
@@ -22,6 +25,28 @@ class App extends Component {
         </header>
       </div>
     );
+  }*/
+  render() {
+  return (
+    <Router>
+      <div>
+        <ul>
+          <li>
+            <Link to="/">Home</Link>
+          </li>
+          <li>
+            <Link to="/add-recipe">About</Link>
+          </li>
+          
+        </ul>
+
+        <hr />
+
+        <Route exact path="/" component={Home} />
+        <Route path="/add-recipe" component={AddRecipe} />
+      </div>
+    </Router>
+  );
   }
 }
 
