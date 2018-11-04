@@ -1,13 +1,11 @@
 // @flow
-import * as React from "react";
-import { Link } from "react-router-dom";
-
-type Props = {};
+import * as React from 'react';
+import { Link } from 'react-router-dom';
 
 /**
  * @class Header
  */
-const Header = (props: Props) => (
+const Header = () => (
   <header>
     <ul>
       <li>

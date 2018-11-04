@@ -1,72 +1,72 @@
 {
+  "extends": ["airbnb", "plugin:flowtype/recommended", "plugin:jest/recommended"],
   "parser": "babel-eslint",
-  "plugins": ["react", "jest", "prettier"],
-  "extends": ["airbnb", "plugin:prettier/recommended", "prettier/react", "react-app"],
-  "globals": {
-    "React": true,
-    "document": true,
-    "window": true,
-    "jQuery": true,
-    "$": true,
-    "localStorage": true,
-    "fetch": true
+  "plugins": [
+    "import",
+    "flowtype",
+    "jest"
+  ],
+  "settings": {
+    "react": {
+      "version": "16.0" // React version, default to the latest React stable release
+    }
   },
-  "root": true,
   "rules": {
-    "indent": ["error", 2],
-    "react/prefer-stateless-function": "warn",
-    "react/self-closing-comp": [
-      "warn",
-      {
-        "component": true,
-        "html": false
+    "valid-jsdoc": ["error", {"requireReturnDescription": false}],
+    "require-jsdoc": ["error", {
+      "require": {
+        "FunctionDeclaration": true,
+        "MethodDefinition": true,
+        "ClassDeclaration": true,
+        "ArrowFunctionExpression": true
       }
-    ],
-    "react/sort-comp": [
-      1,
-      {
-        "order": [
-          "static-methods",
-          "lifecycle",
-          "everything-else",
-          "rendering"
-        ],
-        "groups": {
-          "rendering": ["/^render.+$/", "render"]
-        }
-      }
-    ],
-    "jest/no-disabled-tests": "warn",
-    "jest/no-focused-tests": "error",
-    "jest/no-identical-title": "error",
-    "jest/prefer-to-have-length": "warn",
-    "jest/valid-expect": "error",
-    "react/require-default-props": 0,
-    "jsx-a11y/href-no-hash": "off",
-    "jsx-a11y/anchor-is-valid": ["warn", { "aspects": ["invalidHref"] }],
-    "react/jsx-boolean-value": ["warn", "never"],
-    "react/jsx-closing-bracket-location": ["warn", "after-props"],
-    "react/jsx-curly-spacing": ["warn", "never"],
-    "react/jsx-filename-extension": ["warn", { "extensions": [".js", ".jsx"] }],
-    "react/jsx-first-prop-new-line": ["warn", "multiline"],
-    "react/jsx-handler-names": [
-      "warn",
-      {
-        "eventHandlerPrefix": "handle",
-        "eventHandlerPropPrefix": "on"
-      }
-    ],
-    "react/jsx-indent": ["warn", 2],
-    "react/jsx-key": "error",
-    "react/jsx-wrap-multilines": ["warn"],
-    "react/jsx-indent-props": 0,
-    "no-trailing-spaces": [2, { "skipBlankLines": true }],
-    "prefer-template": 0,
-    "import/prefer-default-export": 0,
-    "import/no-unresolved": 0,
-    "import/no-extraneous-dependencies": 0,
-    "import/extensions": 0,
-    "babel/object-curly-spacing": 0
+    }],
+    "class-methods-use-this": 0, // I'm not really sure on this one. Switching class methods to static caused lots of issues, so I'd rather just ignore.
+    "flowtype/no-types-missing-file-annotation": 1,
+    "flowtype/no-weak-types": 1,
+    "flowtype/require-valid-file-annotation": [1, "always", { "annotationStyle": "line" }],
+    "function-paren-newline": ["error", "consistent"],
+    "jest/no-disabled-tests": 1,
+    "jest/no-identical-title": 2,
+    "jsx-a11y/anchor-is-valid": 0,
+    "jsx-a11y/click-events-have-key-events": 0, // We can turn this back on at some pount.
+    "jsx-a11y/no-autofocus": 0,
+    "jsx-a11y/href-no-hash": 0,
+    "jsx-a11y/label-has-for": 0, // This is broke.
+    "jsx-a11y/no-static-element-interactions": 0,
+    "max-len": ["error", {
+      "ignoreComments": true,
+      "code": 100,
+      "ignoreUrls": true,
+      "ignoreStrings": true,
+      "ignoreTemplateLiterals": true
+    }],
+    "max-lines": ["warn", 300],
+    "no-mixed-operators": ["error", {"allowSamePrecedence": true}],
+    "no-path-concat": 1,
+    "no-plusplus": ["error", { "allowForLoopAfterthoughts": true }],
+    "no-restricted-globals": 0,
+    "no-underscore-dangle": ["error", { "allow": ["_id", "_rev", "_deleted", "__eventListeners"] }],
+    "object-curly-newline": ["error", {
+      "multiline": true,
+      "consistent": true
+    }],
+    "prefer-destructuring": ["error", {
+      "array": false,
+      "object": true
+    }],
+    "prefer-promise-reject-errors": 1,
+    "prefer-rest-params": 1,
+    "react/default-props-match-prop-types": 0, // Disabled because it confuses Flow
+    "react/jsx-filename-extension": 1,
+    "react/jsx-no-bind": 2,
+    "react/jsx-wrap-multilines": ["error", { "arrow": false }],
+    "react/no-array-index-key": 1,
+    "react/no-deprecated": 2,
+    "react/prefer-es6-class": 1,
+    "react/prefer-stateless-function": [2, { "ignorePureComponents": true }],
+    "react/sort-comp": 0,
+    "react/require-default-props": 0
   },
   "env": {
     "es6": true,

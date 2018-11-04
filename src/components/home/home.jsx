@@ -1,26 +1,44 @@
 // @flow
-import React from "react";
-// import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 
-const styles = theme => ({
-  heroUnit: {
-    backgroundColor: theme.palette.background.paper
-  }
-});
-type Props = {};
+type Props = {
+  counter: number,
+  incrementCounter: (count: number) => void,
+};
+/**
+ * Home Page component
+ * @class Home
+ * @extends {React.Component}
+   */
 class Home extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.props = props;
-  }
+  /**
+   * Handles increment functionality
+   * @returns {void}
+   */
+  handleIncrement = () => {
+    const { incrementCounter, counter } = this.props;
+    incrementCounter(counter);
+  };
 
+  /**
+   * Renders the component.
+   * @returns {React.Component} The rendered component.
+   */
   render() {
+    const { counter } = this.props;
     return (
       <div>
         <div>Home page</div>
+        <div>
+          Count:
+          { counter }
+        </div>
+        <button type="button" onClick={this.handleIncrement}>
+          Increment counter
+        </button>
       </div>
     );
   }
 }
 
-export default Home; // withStyles(styles, { withTheme: true })(Home);
+export default Home;

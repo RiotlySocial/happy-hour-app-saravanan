@@ -1,26 +1,44 @@
 // @flow
-import React from "react";
-// import { withStyles } from '@material-ui/core/styles';
+import React from 'react';
 
-const styles = theme => ({
-  heroUnit: {
-    backgroundColor: theme.palette.background.paper
-  }
-});
-type Props = {};
+type Props = {
+  counter: number,
+  decrementCounter: (count: number) => void,
+};
+/**
+ * About Page component
+ * @class About
+ * @extends {React.Component}
+   */
 class About extends React.Component<Props> {
-  constructor(props: Props) {
-    super(props);
-    this.props = props;
-  }
+  /**
+   * Handles decrement functionality
+   * @returns {void}
+   */
+  handleDecrement = () => {
+    const { decrementCounter, counter } = this.props;
+    decrementCounter(counter);
+  };
 
+  /**
+   * Renders the component.
+   * @returns {React.Component} The rendered component.
+   */
   render() {
+    const { counter } = this.props;
     return (
       <div>
         <div>About page</div>
+        <div>
+          Count:
+          { counter }
+        </div>
+        <button type="button" onClick={this.handleDecrement}>
+          Decrement counter
+        </button>
       </div>
     );
   }
 }
 
-export default About; // withStyles(styles, { withTheme: true })(About);
+export default About;
