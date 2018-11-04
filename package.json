@@ -11,6 +11,8 @@
   "scripts": {
     "start": "react-scripts start",
     "build": "react-scripts build",
+    "lint:css": "gulp lintcss",
+    "lint:js": "node_modules/eslint/bin/eslint.js --ext .jsx,.js src/ ; exit 0",
     "test": "react-scripts test",
     "eject": "react-scripts eject"
   },
@@ -25,13 +27,16 @@
   ],
   "devDependencies": {
     "babel-preset-flow": "^6.23.0",
-    "eslint": "^5.8.0",
+    "eslint": "^5.6.0",
     "eslint-config-airbnb": "^17.1.0",
     "eslint-config-airbnb-base": "^13.1.0",
     "eslint-config-prettier": "^3.1.0",
+    "eslint-plugin-css-modules": "^2.10.0",
     "eslint-plugin-import": "^2.14.0",
     "eslint-plugin-jest": "^21.27.0",
     "eslint-plugin-prettier": "^3.0.0",
-    "flow-bin": "^0.85.0"
+    "flow-bin": "^0.85.0",
+    "stylelint": "^9.7.1",
+    "stylelint-config-standard": "^18.2.0"
   }
 }

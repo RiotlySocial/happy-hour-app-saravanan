@@ -9,7 +9,7 @@ const styles = theme => ({
   }
 });
 type Props = {};
-class AddRecipe extends React.Component<Props> {
+class About extends React.Component<Props> {
   constructor(props: Props) {
     super(props);
     this.props = props;
@@ -18,10 +18,10 @@ class AddRecipe extends React.Component<Props> {
   render() {
     return (
       <div>
-        <div>Topic page</div>
+        <div>About page</div>
       </div>
     );
   }
 }
 
-export default AddRecipe; // withStyles(styles, { withTheme: true })(AddRecipe);
+export default About; // withStyles(styles, { withTheme: true })(About);
