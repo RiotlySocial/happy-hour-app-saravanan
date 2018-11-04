@@ -1,32 +1,27 @@
 import React, { Component } from "react";
-import { BrowserRouter as Router, Route, Link } from "react-router-dom";
-import logo from "./logo.svg";
+import { BrowserRouter as Router, Route } from "react-router-dom";
 import "./App.css";
 import About from "./components/about/about";
 import Home from "./components/home/home";
+import Header from "./components/layout/header";
+import Footer from "./components/layout/footer";
 
 type Props = {};
 class App extends Component<Props> {
   constructor(props) {
     super(props);
-    console.log(this.props);
   }
 
   render() {
     return (
       <Router>
         <div>
-          <ul>
-            <li>
-              <Link to="/">Home</Link>
-            </li>
-            <li>
-              <Link to="/about">About</Link>
-            </li>
-          </ul>
-          <hr />
-          <Route exact path="/" component={Home} />
-          <Route path="/about" component={About} />
+          <Header />
+          <main>
+            <Route exact path="/" component={Home} />
+            <Route path="/about" component={About} />
+          </main>
+          <Footer />
         </div>
       </Router>
     );
