@@ -8,7 +8,8 @@ import { Route, Redirect } from 'react-router-dom';
  * @param {Object} props props object for component
  * @returns {React.Fragment}
  */
-export const PublicRoute = (props: any) => {console.log(props);
+export const PublicRoute = (props: any) => {
+  console.log(props);
   const { hasAuth, component: Component, ...rest } = props;
   return (<Route
     {...rest}

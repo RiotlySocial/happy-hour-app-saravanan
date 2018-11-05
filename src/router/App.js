@@ -10,7 +10,11 @@ import { PublicRoute } from './publicRouter';
 import { PrivateRoute } from './privateRouter';
 
 
-type Props = {};
+type Props = {
+  hasAuth: boolean,
+  logoutUser: () => void,
+  loginUser: () => void
+};
 /**
  * App component
  * @class App
@@ -24,6 +28,7 @@ class App extends Component<Props> {
    */
   constructor(props: Props) {
     super(props);
+    console.log(props);
   }
 
   /**
@@ -31,11 +36,11 @@ class App extends Component<Props> {
    * @returns {React.Component} The rendered component.
    */
   render() {
-    const { hasAuth } = this.props;
+    const { hasAuth, loginUser, logoutUser } = this.props;
     return (
       <Router>
         <div>
-          <Header {...this.props}/>
+          <Header hasAuth={hasAuth} loginUser={loginUser} logoutUser={logoutUser} />
           <main>
             <Switch>
               <PublicRoute exact path="/" component={Home} />

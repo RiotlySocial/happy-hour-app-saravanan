@@ -8,7 +8,8 @@ import { Route, Redirect } from 'react-router-dom';
  * @param {Object} props props object for component
  * @returns {React.Fragment}
  */
-export const PrivateRoute = (props: any) => {console.log(props);
+export const PrivateRoute = (props: any) => {
+  console.log(props);
   const { hasAuth, component: Component, ...rest } = props;
 
   return (<Route
