@@ -17,3 +17,19 @@ export const subCounter = (count: number) => ({
   type: 'SUB_COUNTER',
   count,
 });
+
+/**
+   * @param {string} uid user id
+   * @return {Object} Redux action.
+   */
+export const login = (uid: string) => ({
+  type: 'LOGIN',
+  uid,
+});
+/**
+   * @return {Object} Redux action.
+   */
+export const logout = () => ({
+  type: 'LOGOUT',
+
+});

@@ -18,6 +18,20 @@ const counter = (state = 0, action) => {
   }
 };
 
+/**
+ * Auth reducer
+ * @param  {boolean} state current state object
+ * @param  {any} action action object with new state variables
+ * @returns {any} new state
+ */
+const hasAuth = (state: boolean = false, action) => {
+  switch (action.type) {
+    case 'LOGIN': return true;
+    case 'LOGOUT': return false;
+    default: return state;
+  }
+};
 export default combineReducers({
   counter,
+  hasAuth,
 });

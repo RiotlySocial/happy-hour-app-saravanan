@@ -1,5 +1,7 @@
 // @flow
 import React from 'react';
+import Card from '@material-ui/core/Card';
+import CardContent from '@material-ui/core/CardContent';
 
 type Props = {
   counter: number,
@@ -27,16 +29,20 @@ class About extends React.Component<Props> {
   render() {
     const { counter } = this.props;
     return (
-      <div>
-        <div>About page</div>
-        <div>
-          Count:
-          { counter }
-        </div>
-        <button type="button" onClick={this.handleDecrement}>
-          Decrement counter
-        </button>
-      </div>
+      <Card>
+        <CardContent>
+          <div>
+            <div>About page</div>
+            <div>
+              Count:
+              { counter }
+            </div>
+            <button type="button" onClick={this.handleDecrement}>
+              Decrement counter
+            </button>
+          </div>
+        </CardContent>
+      </Card>
     );
   }
 }
