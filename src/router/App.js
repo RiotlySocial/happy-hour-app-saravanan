@@ -6,8 +6,8 @@ import About from '../containers/AboutContainer';
 import Home from '../containers/HomeContainer';
 import Header from '../components/layout/header';
 import Footer from '../components/layout/footer';
-import { PublicRoute } from './publicRouter';
-import { PrivateRoute } from './privateRouter';
+import PublicRoute from './publicRouter';
+import PrivateRoute from './privateRouter';
 
 
 type Props = {
