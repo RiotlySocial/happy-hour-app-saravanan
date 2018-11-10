@@ -5,8 +5,9 @@
  * @returns {Promise} boolean based on auth status
  */
 export function login() {
+  console.log(`${window.API_URL}/api/data`);
   // Implement DB call and other login code
-  fetch('https://app-happyhour-riotly.herokuapp.com/api/data')
+  fetch(`${window.API_URL}/api/data`)
     .then(response => response.json())
     .then(res => console.log(res))
     .catch((error) => {
