@@ -6,7 +6,7 @@
  */
 export function login() {
   // Implement DB call and other login code
-  fetch('/api/data')
+  fetch('https://app-happyhour-riotly.herokuapp.com/api/data')
     .then(response => response.json())
     .then(res => console.log(res))
     .catch((error) => {
