@@ -6,6 +6,13 @@
  */
 export function login() {
   // Implement DB call and other login code
+  fetch('/api/data')
+    .then(response => response.json())
+    .then(res => console.log(res))
+    .catch((error) => {
+      console.log(error);
+    });
+
   return Promise.resolve(true);
 }
 
