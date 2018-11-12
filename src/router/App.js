@@ -2,8 +2,9 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
-import About from '../containers/AboutContainer';
+import Lobby from '../containers/LobbyContainer';
 import Home from '../containers/HomeContainer';
+import TableView from '../containers/TableViewContainer';
 import Header from '../components/layout/header';
 import Footer from '../components/layout/footer';
 import PublicRoute from './publicRouter';
@@ -39,16 +40,17 @@ class App extends Component<Props> {
     const { hasAuth, loginUser, logoutUser } = this.props;
     return (
       <Router>
-        <div>
+        <React.Fragment>
           <Header hasAuth={hasAuth} loginUser={loginUser} logoutUser={logoutUser} />
           <main>
             <Switch>
               <PublicRoute exact path="/" component={Home} />
-              <PrivateRoute path="/about" component={About} />
+              <PrivateRoute path="/lobby" component={Lobby} />
+              <PrivateRoute path="/table-view" component={TableView} />
             </Switch>
           </main>
           <Footer />
-        </div>
+        </React.Fragment>
       </Router>
     );
   }
