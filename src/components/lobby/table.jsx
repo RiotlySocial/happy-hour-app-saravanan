@@ -21,8 +21,8 @@ class Table extends React.PureComponent<Props> {
    * @returns {void}
    */
   goToTableView = () => {
-    const { history } = this.props;
-    if (history) {
+    const { members, history } = this.props;
+    if (members.length < 4 && history) {
       history.push('/table-view');
     }
   };
@@ -33,8 +33,9 @@ class Table extends React.PureComponent<Props> {
    */
   render() {
     const { members } = this.props;
+    const hover = members.length > 3 ? 'r-table-nohover' : '';
     return (
-      <div className="r-table" onClick={this.goToTableView}>
+      <div className={`${hover} r-table`} onClick={this.goToTableView}>
         {members && members.map((member, index) => member
           && <Avatar
             className={`r-avatar-${index}`}

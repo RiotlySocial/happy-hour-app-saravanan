@@ -27,13 +27,11 @@ class Home extends React.PureComponent<Props> {
       return <Redirect to="/lobby" />;
     }
     return (
-      <div style={{ textAlign: 'center', paddingTop: 30 }}>
-        <Card style={{ display: 'inline-block' }}>
+      <div className="r-home center">
+        <Card className="r-home-card">
           <CardContent>
-            <Typography color="textSecondary" gutterBottom>
-              Welcome to Happy Hour
-            </Typography>
-            <Button onClick={loginUser} color="primary" variant="contained">Login with Google</Button>
+            <Typography>Welcome to Happy Hour</Typography>
+            <Button onClick={loginUser} color="primary" variant="contained" className="r-home-google">Log in with Google</Button>
           </CardContent>
         </Card>
       </div>

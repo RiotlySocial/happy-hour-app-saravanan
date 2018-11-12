@@ -1,14 +1,40 @@
 // @flow
 import { createMuiTheme } from '@material-ui/core/styles';
 
+const boxShadow = '0 2px 12px 0 rgba(210,210,210,0.50)';
 const theme = createMuiTheme({
+  boxShadow,
   typography: {
     useNextVariants: true,
+    fontFamily: "'Helvetica', 'Arial', sans-serif",
+  },
+  overrides: {
+    MuiButton: {
+      root: {
+        textTransform: 'none',
+      },
+    },
+    MuiSpeedDial: {
+      fab: { boxShadow },
+    },
+    MuiSpeedDialAction: {
+      button: {
+        color: 'white',
+        backgroundColor: '#69B32A',
+        '&:hover': {
+          backgroundColor: '#357a38',
+        },
+        width: 56,
+        height: 56,
+        marginLeft: 0,
+        boxShadow,
+      },
+    },
   },
   palette: {
     type: 'light',
-    primary: { main: '#e10050' },
-    secondary: { main: '#4caf50' },
+    primary: { main: '#C72121' },
+    secondary: { main: '#69B32A', contrastText: '#ffffff' },
 
     error: { main: '#ca0909' },
 

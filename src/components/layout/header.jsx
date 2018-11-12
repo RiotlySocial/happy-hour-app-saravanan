@@ -3,19 +3,28 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import Icon from '@material-ui/core/Icon';
+import SearchIcon from '@material-ui/icons/Search';
+import SignalIcon from '@material-ui/icons/SignalCellularAlt';
+import SubjectIcon from '@material-ui/icons/Subject';
 import Avatar from '@material-ui/core/Avatar';
-import TextField from '@material-ui/core/TextField';
+import Input from '@material-ui/core/Input';
+import InputAdornment from '@material-ui/core/InputAdornment';
+import { withStyles } from '@material-ui/core';
 import LeftNav from './leftNav';
 import type { User } from '../../utils/types';
 
 type Props = {
-  user: User
+  user: User,
+  logoutUser: () => void,
 };
 type State = {
   showLeftNav: boolean
 }
-
+const styles = theme => ({
+  shadow: {
+    boxShadow: theme.boxShadow
+  }
+});
 /**
  * Header Component
  * @class Header
@@ -50,26 +59,36 @@ class Header extends React.Component<Props, State> {
    */
   render() {
     const { showLeftNav } = this.state;
-    const { user } = this.props;
+    const { user, classes, logoutUser } = this.props;
     return (
-      <AppBar className="app-bar" color="inherit" position="static">
+      <AppBar className="app-bar noShadow" color="inherit" position="static">
         <Toolbar>
           <Button className="app-menu" variant="fab" onClick={() => this.toggleLeftNav(true)} color="inherit" aria-label="Show Left Nav">
-            <Icon fontSize="large">subject</Icon>
+            <SubjectIcon fontSize="large" />
           </Button>
-          <LeftNav showLeftNav={showLeftNav} toggleLeftNav={this.toggleLeftNav} />
+          <LeftNav showLeftNav={showLeftNav} toggleLeftNav={this.toggleLeftNav} logoutUser={logoutUser} />
           <form autoComplete="off">
-            <TextField className="searchInput" id="search" margin="normal" type="search" placeholder="Search your team..." />
+            <Input
+              startAdornment={
+                <InputAdornment position="start">
+                  <SearchIcon />
+                </InputAdornment>
+              }
+              className="r-search"
+              id="search"
+              type="search"
+              placeholder="Search your team..."
+            />
           </form>
           <div className="flex-grow" />
-          <span className="app-signal">
-            <Icon fontSize="large" color="secondary" aria-label="Network connection status">signal_cellular_alt</Icon>
+          <span className={`${classes.shadow} app-signal`}>
+            <SignalIcon fontSize="large" color="secondary" aria-label="Network connection status" />
           </span>
-          <Avatar className="app-avatar" alt={user.name} src={user.avatar} />
+          <Avatar className={`${classes.shadow} app-avatar`} alt={user.name} src={user.avatar} />
         </Toolbar>
       </AppBar>
     );
   }
 }
 
-export default Header;
+export default withStyles(styles)(Header);

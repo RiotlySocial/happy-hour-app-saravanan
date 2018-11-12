@@ -41,8 +41,8 @@ class App extends Component<Props> {
     return (
       <Router>
         <React.Fragment>
-          <Header hasAuth={hasAuth} loginUser={loginUser} logoutUser={logoutUser} />
-          <main>
+          {hasAuth && <Header hasAuth={hasAuth} loginUser={loginUser} logoutUser={logoutUser} />}
+          <main style={ { height: (hasAuth ? '' : '100%') }}>
             <Switch>
               <PublicRoute exact path="/" component={Home} />
               <PrivateRoute path="/lobby" component={Lobby} />

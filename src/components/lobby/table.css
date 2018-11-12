@@ -8,9 +8,23 @@
   background: url(./table.png) no-repeat 0 0;
   margin: 40px 10px;
   background-size: contain;
-  height: 18vw;
+  height: 16vw;
   flex-basis: 20%;
   position: relative;
+  opacity: 0.8;
+  cursor: pointer;
+}
+
+.r-table:hover {
+  opacity: 1;
+}
+
+.r-table-nohover {
+  cursor: not-allowed;
+}
+
+.r-table-nohover:hover {
+  opacity: 0.8;
 }
 
 .r-table img {
@@ -24,21 +38,21 @@
 }
 
 .r-table > div.r-avatar-0 {
-  left: 6vw;
+  left: 5vw;
   top: -1vw;
 }
 
 .r-table > div.r-avatar-1 {
-  top: 6vw;
+  top: 5vw;
   left: -1vw;
 }
 
 .r-table > div.r-avatar-2 {
-  top: 13vw;
-  left: 6vw;
+  top: 12vw;
+  left: 5vw;
 }
 
 .r-table > div.r-avatar-3 {
-  left: 12vw;
-  top: 6vw;
+  left: 11vw;
+  top: 5vw;
 }

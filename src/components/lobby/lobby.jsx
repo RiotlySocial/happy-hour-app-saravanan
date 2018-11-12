@@ -22,7 +22,7 @@ class Lobby extends React.PureComponent<Props> {
   render() {
     const { tables } = this.props;
     return (
-      <Card>
+      <Card className="noShadow">
         <CardContent>
           <div className="r-table-container">
             {tables && tables.map(table => <Table members={table} />)}

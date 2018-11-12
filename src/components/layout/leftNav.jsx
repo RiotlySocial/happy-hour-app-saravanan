@@ -11,6 +11,7 @@ import Drawer from '@material-ui/core/Drawer';
 type Props = {
   showLeftNav: boolean,
   toggleLeftNav: (boolean) => void,
+  logoutUser: () => void,
 };
 
 /**
@@ -24,7 +25,7 @@ class LeftNav extends React.PureComponent<Props> {
    * @returns {React.Component} The rendered component.
    */
   render() {
-    const { showLeftNav, toggleLeftNav } = this.props;
+    const { showLeftNav, toggleLeftNav, logoutUser } = this.props;
     return (
       <Drawer open={showLeftNav} onClose={() => toggleLeftNav(false)}>
         <div className="flex">
@@ -39,7 +40,7 @@ class LeftNav extends React.PureComponent<Props> {
               <ListItemIcon><Icon>settings</Icon></ListItemIcon>
               <ListItemText primary="Settings" />
             </ListItem>
-            <ListItem button key="Logout">
+            <ListItem onClick={logoutUser} button key="Logout">
               <ListItemIcon><Icon>input</Icon></ListItemIcon>
               <ListItemText primary="Log Out" />
             </ListItem>
