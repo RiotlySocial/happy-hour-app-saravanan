@@ -1,9 +1,7 @@
 // @flow
-import * as React from 'react';
-
 /**
  * @class Footer
  */
-const Footer = () => <footer>Footer</footer>;
+const Footer = () => null;
 
 export default Footer;

@@ -1,49 +1,42 @@
 // @flow
 import React from 'react';
+import { Redirect } from 'react-router-dom';
 import Button from '@material-ui/core/Button';
 import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
+import Typography from '@material-ui/core/Typography';
 
 type Props = {
-  counter: number,
-  incrementCounter: (count: number) => void,
+  hasAuth: boolean,
+  loginUser: () => void
 };
 /**
  * Home Page component
  * @class Home
- * @extends {React.Component}
+ * @extends {React.Component<Props>}
    */
-class Home extends React.Component<Props> {
-  /**
-   * Handles increment functionality
-   * @returns {void}
-   */
-  handleIncrement = () => {
-    const { incrementCounter, counter } = this.props;
-    incrementCounter(counter);
-  };
-
+class Home extends React.PureComponent<Props> {
   /**
    * Renders the component.
    * @returns {React.Component} The rendered component.
    */
   render() {
-    const { counter } = this.props;
+    const { loginUser, hasAuth } = this.props;
+
+    if (hasAuth) {
+      return <Redirect to="/lobby" />;
+    }
     return (
-      <Card>
-        <CardContent>
-          <div>
-            <div>Home page</div>
-            <div>
-              Count:
-              { counter }
-            </div>
-            <Button color="secondary" onClick={this.handleIncrement}>
-              Increment counter
-            </Button>
-          </div>
-        </CardContent>
-      </Card>
+      <div style={{ textAlign: 'center', paddingTop: 30 }}>
+        <Card style={{ display: 'inline-block' }}>
+          <CardContent>
+            <Typography color="textSecondary" gutterBottom>
+              Welcome to Happy Hour
+            </Typography>
+            <Button onClick={loginUser} color="primary" variant="contained">Login with Google</Button>
+          </CardContent>
+        </Card>
+      </div>
     );
   }
 }
