@@ -19,12 +19,12 @@ export const subCounter = (count: number) => ({
 });
 
 /**
-   * @param {string} uid user id
+   * @param {Object} user user object
    * @return {Object} Redux action.
    */
-export const login = (uid: string) => ({
+export const login = (user: Object) => ({
   type: 'LOGIN',
-  uid,
+  user,
 });
 /**
    * @return {Object} Redux action.

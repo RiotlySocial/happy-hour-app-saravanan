@@ -14,7 +14,7 @@ import LeftNav from './leftNav';
 import type { User } from '../../utils/types';
 
 type Props = {
-  user: User,
+  hasAuth: User,
   logoutUser: () => void,
 };
 type State = {
@@ -32,7 +32,7 @@ const styles = theme => ({
  */
 class Header extends React.Component<Props, State> {
   static defaultProps = {
-    user: { name: 'Saravanan', avatar: 'https://i.pinimg.com/236x/79/47/51/79475174c3870e931886bbedc635c64e.jpg' },
+    
   };
 
   /**
@@ -59,7 +59,7 @@ class Header extends React.Component<Props, State> {
    */
   render() {
     const { showLeftNav } = this.state;
-    const { user, classes, logoutUser } = this.props;
+    const { hasAuth, classes, logoutUser } = this.props;
     return (
       <AppBar className="app-bar noShadow" color="inherit" position="static">
         <Toolbar>
@@ -84,7 +84,7 @@ class Header extends React.Component<Props, State> {
           <span className={`${classes.shadow} app-signal`}>
             <SignalIcon fontSize="large" color="secondary" aria-label="Network connection status" />
           </span>
-          <Avatar className={`${classes.shadow} app-avatar`} alt={user.name} src={user.avatar} />
+          <Avatar className={`${classes.shadow} app-avatar`} alt={hasAuth.first_name} src={hasAuth.avatar} />
         </Toolbar>
       </AppBar>
     );

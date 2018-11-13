@@ -30,7 +30,7 @@ class LeftNav extends React.PureComponent<Props> {
       <Drawer open={showLeftNav} onClose={() => toggleLeftNav(false)}>
         <div className="flex">
           <div className="flex-grow" />
-          <Button className="app-menu" onClick={() => toggleLeftNav(false)} color="none" aria-label="Hide Left Nav">
+          <Button className="app-menu" onClick={() => toggleLeftNav(false)} color="inherit" aria-label="Hide Left Nav">
             <Icon fontSize="large">subject</Icon>
           </Button>
         </div>

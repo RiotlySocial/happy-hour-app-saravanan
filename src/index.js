@@ -15,6 +15,22 @@ const el = document.getElementById('root');
 if (!el) {
   throw new Error('App element not found');
 }
+// This has to be fixed for actual production code. This is just a stop-gap solution.
+window.API_URL = (window.location.hostname === 'localhost') ? 'http://localhost:3001' : 'https://app-happyhour-riotly.herokuapp.com';
+
+// Intercepting fetch API to add APP instance URL
+const originalFetch = window.fetch;
+window.fetch = (...args) => {
+  const url = window.API_URL + args[0];
+  const options = args[1] || {};
+  const jwt = window.localStorage.getItem('jwt');
+  if (jwt) {
+    options.headers = new Headers({
+      Authorization: (`Bearer ${jwt}`),
+    });
+  }
+  return originalFetch.apply(this, [url, options]);
+};
 
 ReactDOM.render(
   <Provider store={store}>
@@ -25,17 +41,7 @@ ReactDOM.render(
   el,
 );
 
-// This has to be fixed for actual production code. This is just a stop-gap solution.
-window.API_URL = (window.location.hostname === 'localhost') ? ' ' : 'https://app-happyhour-riotly.herokuapp.com';
-
 // If you want your app to work offline and load faster, you can change
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
-
-// Intercepting fetch API to add APP instance URL
-const originalFetch = window.fetch;
-window.fetch = (...args) => {
-  args[0] = window.API_URL + args[0];
-  return originalFetch.apply(this, args);
-};

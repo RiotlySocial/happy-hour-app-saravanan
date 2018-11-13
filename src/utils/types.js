@@ -1,3 +1,3 @@
 // @flow
 
-export type User = { name: string, avatar: string };
+export type User = { first_name: string, avatar: string };

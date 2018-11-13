@@ -1,5 +1,5 @@
 // @flow
-import React, { Component } from 'react';
+import React from 'react';
 import { BrowserRouter as Router, Switch } from 'react-router-dom';
 import './App.css';
 import Lobby from '../containers/LobbyContainer';
@@ -12,7 +12,7 @@ import PrivateRoute from './privateRouter';
 
 
 type Props = {
-  hasAuth: boolean,
+  hasAuth: Object,
   logoutUser: () => void,
   loginUser: () => void
 };
@@ -21,7 +21,7 @@ type Props = {
  * @class App
  * @extends {React.Component}
    */
-class App extends Component<Props> {
+class App extends React.PureComponent<Props> {
   /**
    * Constructor method for component
    * @param {Props} props props for the component
@@ -29,7 +29,6 @@ class App extends Component<Props> {
    */
   constructor(props: Props) {
     super(props);
-    console.log(props);
   }
 
   /**

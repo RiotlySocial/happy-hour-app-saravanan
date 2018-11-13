@@ -24,10 +24,10 @@ const counter = (state = 0, action) => {
  * @param  {any} action action object with new state variables
  * @returns {any} new state
  */
-const hasAuth = (state: boolean = false, action) => {
+const hasAuth = (state: Object | null = null, action) => {
   switch (action.type) {
-    case 'LOGIN': return true;
-    case 'LOGOUT': return false;
+    case 'LOGIN': return action.user;
+    case 'LOGOUT': return null;
     default: return state;
   }
 };

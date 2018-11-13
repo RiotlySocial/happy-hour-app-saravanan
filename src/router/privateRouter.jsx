@@ -4,7 +4,7 @@ import { connect } from 'react-redux';
 import { Route, Redirect } from 'react-router-dom';
 
 type Props = {
-  hasAuth: boolean,
+  hasAuth: Object,
   component: any
 };
 /**

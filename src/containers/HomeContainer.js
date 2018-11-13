@@ -15,8 +15,8 @@ const mapStateToProps = state => ({ hasAuth: state.hasAuth });
    * @return {Object} The props to be transferred to this container.
    */
 const mapDispatchToProps = dispatch => ({
-  loginUser: () => {
-    authLogin().then(() => dispatch(login(Math.random().toString(36).substring(7))));
+  loginUser: (token: string) => {
+    authLogin(token).then(user => dispatch(login(user)));
   },
 });
 

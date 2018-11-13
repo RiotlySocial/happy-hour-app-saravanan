@@ -2,18 +2,20 @@
 
 /**
  * Login user from app
+ * @param {string} token jwt token
  * @returns {Promise} boolean based on auth status
  */
-export function login() {
-  // Implement DB call and other login code
-  fetch('/api/data')
+export function login(token: string) {
+  return window.fetch('/api/users/me')
     .then(response => response.json())
-    .then(res => console.log(res))
+    .then((response) => {
+      window.localStorage.setItem('jwt', token);
+      return response;
+    })
     .catch((error) => {
       console.log(error);
+      return error;
     });
-
-  return Promise.resolve(true);
 }
 
 /**
@@ -21,6 +23,14 @@ export function login() {
  * @returns {void}
  */
 export function logout() {
-  // Implement DB call and other login code
-  return Promise.resolve(true);
+  return window.fetch('/api/auth/logout')
+    .then(response => response.json())
+    .then((response) => {
+      window.localStorage.removeItem('jwt');
+      return response;
+    })
+    .catch((error) => {
+      console.log(error);
+      return error;
+    });
 }
