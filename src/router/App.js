@@ -45,7 +45,7 @@ class App extends React.PureComponent<Props> {
             <Switch>
               <PublicRoute exact path="/" component={Home} />
               <PrivateRoute path="/lobby" component={Lobby} />
-              <PrivateRoute path="/table-view" component={TableView} />
+              <PrivateRoute path="/table-view/:tableId" component={TableView} />
             </Switch>
           </main>
           <Footer />

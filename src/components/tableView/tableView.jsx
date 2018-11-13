@@ -28,7 +28,6 @@ type Action = {
 }
 type Props = {
   user: User,
-  table: [User],
   history?: any,
 };
 type State = {
@@ -50,6 +49,8 @@ class TableView extends React.Component<Props, State> {
   constructor(props) {
     super(props);
     this.state = {
+      tableId: null,
+      members: [],
       openActions: false,
       allActionsOff: false,
       actions: [
@@ -136,13 +137,22 @@ class TableView extends React.Component<Props, State> {
       history.push('/lobby');
     }
   }
-
+  /**
+   * Called after component is mounted
+   * @returns {void}
+   */
+  componentDidMount() {
+    const { tableId } = this.props.match.params;
+    fetch(`/api/table/${tableId}`)
+      .then(response => response.json())
+      .then(data => this.setState({ tables: this.getTables(data), isLoading: false }));
+  }
   /**
    * Renders the component.
    * @returns {React.Component} The rendered component.
    */
   render() {
-    const { table } = this.props;
+    const { table, user } = this.props;
     const { openActions, actions } = this.state;
     return (
       <Dialog
@@ -154,7 +164,7 @@ class TableView extends React.Component<Props, State> {
       >
         <div className="r-tv-bg">
           <List className="r-tv-screens">
-            {table.map((member, index) => (
+            {[...table, user].map((member, index) => (
               <ListItem className="r-tv-screen" key={index}>
                 <ListItemAvatar>
                   <Avatar src={member.avatar} alt={member.name} />
