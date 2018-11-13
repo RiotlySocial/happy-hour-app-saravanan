@@ -32,3 +32,10 @@ window.API_URL = (window.location.hostname === 'localhost') ? ' ' : 'https://app
 // unregister() to register() below. Note this comes with some pitfalls.
 // Learn more about service workers: http://bit.ly/CRA-PWA
 serviceWorker.unregister();
+
+// Intercepting fetch API to add APP instance URL
+const originalFetch = window.fetch;
+window.fetch = (...args) => {
+  args[0] = window.API_URL + args[0];
+  return originalFetch.apply(this, args);
+};
