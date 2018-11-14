@@ -69,10 +69,10 @@ class TableView extends React.Component<Props, State> {
    * @returns {void}
    */
   handleSpeedDialClick = () => {
-    const { actions } = this.state;
+    const { actions, allActionsOff } = this.state;
     this.setState({
-      actions: actions.map(action => this.modifyAction({ ...action }, false)),
-      allActionsOff: true,
+      actions: actions.map(action => this.modifyAction({ ...action }, allActionsOff)),
+      allActionsOff: !allActionsOff,
     });
   }
 
@@ -98,10 +98,13 @@ class TableView extends React.Component<Props, State> {
    * @returns {void}
    */
   handleActionClick = (index) => {
-    let { actions } = this.state;
+    let { actions, allActionsOff } = this.state;
     actions = [...actions];
+    if (actions[index].isOff) {
+      allActionsOff = false;
+    }
     actions[index] = this.modifyAction(actions[index], actions[index].isOff);
-    this.setState({ actions });
+    this.setState({ actions, allActionsOff });
   }
 
   /**
@@ -137,44 +140,51 @@ class TableView extends React.Component<Props, State> {
   handleLeaveTable = () => {
     const { history } = this.props;
     // const { tableId } = this.state;
-    const tableId = this.state.tableId || this.props.match.params.tableId
-    fetch(`/api/table/leave/${tableId}`, {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: JSON.stringify({})})
-    .then(response => response.json())
-    .then(data => {
-      if (history) {
-        history.push('/lobby');
-      }
-    });
+    const tableId = this.state.tableId || this.props.match.params.tableId;
+    fetch(`/api/table/leave/${tableId}`, { method: 'POST', headers: new Headers({ 'Content-Type': 'application/json' }), body: JSON.stringify({}) })
+      .then(response => response.json())
+      .then((data) => {
+        if (history) {
+          history.push('/lobby');
+        }
+      });
   }
+
   getData = () => {
     const tableId = this.state.tableId || this.props.match.params.tableId;
     fetch(`/api/table/${tableId}`)
-        .then(response => response.json())
-        .then(data => this.setState({ members: data.members, isLoading: false }));
+      .then(response => response.json())
+      .then(data => this.setState({ members: data.members, isLoading: false }));
   }
-  componentWillUnmount(){
+
+  componentWillUnmount() {
     clearInterval(this.state.timer);
   }
+
   /**
    * Called after component is mounted
    * @returns {void}
    */
   componentDidMount() {
     const { tableId, position } = this.props.match.params;
-    if(tableId === 'new'){
-      fetch(`/api/table/create`, {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: JSON.stringify({position: position})})
+    if (tableId === 'new') {
+      fetch('/api/table/create', { method: 'POST', headers: new Headers({ 'Content-Type': 'application/json' }), body: JSON.stringify({ position }) })
         .then(response => response.json())
         .then(data => this.setState({ tableId: data._id, members: data.members, isLoading: false }));
-    }else{
+    }else {
       this.getData();
     }
   }
-  updateTable = (table) => {
-    this.setState({tableId: table._id, members: table.members});
+  getSpeeddialTip = () => {
+    return this.state.allActionsOff ? 'Turn on everything': 'Turn off everything';
   }
+  updateTable = (table) => {
+    this.setState({ tableId: table._id, members: table.members });
+  }
+
   renderChatView = () => {
     const { members, openActions, actions } = this.state;
-    return <React.Fragment><List className={`r-tv-screens r-tvs-${members.length}`}>
+    return (<React.Fragment><List className={`r-tv-screens r-tvs-${members.length}`}>
     {members.map((member, index) => (
       <ListItem className="r-tv-screen" key={index}>
         <ListItemAvatar>
@@ -185,7 +195,7 @@ class TableView extends React.Component<Props, State> {
   </List>
   <div className="r-tv-actions">
     <Button className="r-tv-leave" onClick={this.handleLeaveTable} color="primary" variant="contained">Leave table</Button>
-    <Tooltip title="Turn off everything" placement="left-end">
+    <Tooltip title={this.getSpeeddialTip()} placement="left-end">
       <SpeedDial
         ButtonProps={{ color: 'secondary' }}
         ariaLabel="Chat options"
@@ -212,8 +222,9 @@ class TableView extends React.Component<Props, State> {
       </SpeedDial>
     </Tooltip>
   </div>
-  </React.Fragment>;
+  </React.Fragment>);
   }
+
   /**
    * Renders the component.
    * @returns {React.Component} The rendered component.
