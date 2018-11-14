@@ -69,9 +69,7 @@ class Home extends React.Component<Props, State> {
             {
               isLoading
                 ? <CircularProgress />
-                : <Button color="primary" variant="contained" className="r-home-google">
-                  <a href={`${window.API_URL}/api/auth/google`}>Log in with Google</a>
-                  </Button>
+                : <Button href={`${window.API_URL}/api/auth/google`} color="primary" variant="contained" className="r-home-google">Log in with Google</Button>
             }
           </CardContent>
         </Card>

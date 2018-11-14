@@ -7,6 +7,8 @@ import type { User } from '../../utils/types';
 
 type Props = {
   members: [User],
+  tableId: string,
+  position: number,
   history?: any,
 };
 
@@ -16,17 +18,21 @@ type Props = {
  * @extends {React.Component<Props>}
    */
 class Table extends React.PureComponent<Props> {
+  static defaultProps = {
+    tableId: 'new',
+    members: []
+  }
   /**
    * Redirect user to table view page
    * @returns {void}
    */
   goToTableView = () => {
-    const { members, history } = this.props;
+    const { members, history, tableId, position } = this.props;
     if (members.length < 4 && history) {
-      history.push('/table-view');
+      history.push(`/table-view/${tableId}/${position}`);
     }
   };
-
+  
   /**
    * Renders the component.
    * @returns {React.Component} The rendered component.
@@ -38,9 +44,10 @@ class Table extends React.PureComponent<Props> {
       <div className={`${hover} r-table`} onClick={this.goToTableView}>
         {members && members.map((member, index) => member
           && <Avatar
+            key={member._id}
             className={`r-avatar-${index}`}
             src={member.avatar}
-            alt={member.name}
+            alt={member.first_name}
           />)}
       </div>
     );

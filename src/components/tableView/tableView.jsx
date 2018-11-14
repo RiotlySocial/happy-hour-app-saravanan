@@ -17,6 +17,7 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Dialog from '@material-ui/core/Dialog';
 import { Button, Tooltip } from '@material-ui/core';
+import CircularProgress from '@material-ui/core/CircularProgress';
 import type { User } from '../../utils/types';
 import './tableView.css';
 
@@ -133,27 +134,83 @@ class TableView extends React.Component<Props, State> {
    */
   handleLeaveTable = () => {
     const { history } = this.props;
-    if (history) {
-      history.push('/lobby');
-    }
+    const { tableId } = this.state;
+    fetch(`/api/table/leave/${tableId}`, {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: JSON.stringify({})})
+    .then(response => response.json())
+    .then(data => {
+      if (history) {
+        history.push('/lobby');
+      }
+    });
   }
   /**
    * Called after component is mounted
    * @returns {void}
    */
   componentDidMount() {
-    const { tableId } = this.props.match.params;
-    fetch(`/api/table/${tableId}`)
-      .then(response => response.json())
-      .then(data => this.setState({ tables: this.getTables(data), isLoading: false }));
+    const { tableId, position } = this.props.match.params;
+    if(tableId === 'new'){
+      fetch(`/api/table/create`, {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: JSON.stringify({position: position})})
+        .then(response => response.json())
+        .then(data => this.setState({ tables: this.updateTable(data), isLoading: false }));
+    }else{
+      fetch(`/api/table/${tableId}`)
+        .then(response => response.json())
+        .then(data => this.setState({ tables: this.updateTable(data), isLoading: false }));
+    }
+  }
+  updateTable = (table) => {
+    this.setState({tableId: table._id, members: table.members});
+  }
+  renderChatView = () => {
+    const { members, openActions, actions } = this.state;
+    return <React.Fragment><List className="r-tv-screens">
+    {members.map((member, index) => (
+      <ListItem className="r-tv-screen" key={index}>
+        <ListItemAvatar>
+          <Avatar src={member.avatar} alt={member.first_name} />
+        </ListItemAvatar>
+      </ListItem>
+    ))}
+  </List>
+  <div className="r-tv-actions">
+    <Button className="r-tv-leave" onClick={this.handleLeaveTable} color="primary" variant="contained">Leave table</Button>
+    <Tooltip title="Turn off everything" placement="left-end">
+      <SpeedDial
+        ButtonProps={{ color: 'secondary' }}
+        ariaLabel="Chat options"
+        className="r-tv-speeddial"
+        icon={<SpeedDialIcon icon={<DoneAllIcon fontSize="large" />} openIcon={<CloseIcon fontSize="large" />} />}
+        openIcon={<CloseIcon fontSize="large" />}
+        onBlur={this.handleClose}
+        onClick={this.handleSpeedDialClick}
+        onClose={this.handleClose}
+        onFocus={this.handleOpen}
+        onMouseEnter={this.handleOpen}
+        onMouseLeave={this.handleClose}
+        open={openActions}
+        direction="up"
+      >
+        {actions.map((action, index) => (
+          <SpeedDialAction
+            key={action.name}
+            icon={action.icon}
+            tooltipTitle={action.tooltipTitle}
+            onClick={() => this.handleActionClick(index)}
+          />
+        ))}
+      </SpeedDial>
+    </Tooltip>
+  </div>
+  </React.Fragment>;
   }
   /**
    * Renders the component.
    * @returns {React.Component} The rendered component.
    */
   render() {
-    const { table, user } = this.props;
-    const { openActions, actions } = this.state;
+    const { user } = this.props;
+    const { members, openActions, actions, isLoading } = this.state;
     return (
       <Dialog
         PaperProps={{ style: { background: 'transparent' } }}
@@ -163,44 +220,8 @@ class TableView extends React.Component<Props, State> {
         aria-labelledby="View members of the table"
       >
         <div className="r-tv-bg">
-          <List className="r-tv-screens">
-            {[...table, user].map((member, index) => (
-              <ListItem className="r-tv-screen" key={index}>
-                <ListItemAvatar>
-                  <Avatar src={member.avatar} alt={member.name} />
-                </ListItemAvatar>
-              </ListItem>
-            ))}
-          </List>
-          <div className="r-tv-actions">
-            <Button className="r-tv-leave" onClick={this.handleLeaveTable} color="primary" variant="contained">Leave table</Button>
-            <Tooltip title="Turn off everything" placement="left-end">
-              <SpeedDial
-                ButtonProps={{ color: 'secondary' }}
-                ariaLabel="Chat options"
-                className="r-tv-speeddial"
-                icon={<SpeedDialIcon icon={<DoneAllIcon fontSize="large" />} openIcon={<CloseIcon fontSize="large" />} />}
-                openIcon={<CloseIcon fontSize="large" />}
-                onBlur={this.handleClose}
-                onClick={this.handleSpeedDialClick}
-                onClose={this.handleClose}
-                onFocus={this.handleOpen}
-                onMouseEnter={this.handleOpen}
-                onMouseLeave={this.handleClose}
-                open={openActions}
-                direction="up"
-              >
-                {actions.map((action, index) => (
-                  <SpeedDialAction
-                    key={action.name}
-                    icon={action.icon}
-                    tooltipTitle={action.tooltipTitle}
-                    onClick={() => this.handleActionClick(index)}
-                  />
-                ))}
-              </SpeedDial>
-            </Tooltip>
-          </div>
+          { isLoading && <CircularProgress />}
+          { !isLoading && this.renderChatView() }
         </div>
       </Dialog>
     );

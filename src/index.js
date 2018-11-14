@@ -25,9 +25,11 @@ window.fetch = (...args) => {
   const options = args[1] || {};
   const jwt = window.localStorage.getItem('jwt');
   if (jwt) {
-    options.headers = new Headers({
-      Authorization: (`Bearer ${jwt}`),
-    });
+    const headers = options.headers || new Headers();
+    headers.append(
+      'Authorization', (`Bearer ${jwt}`),
+    );
+    options.headers = headers;
   }
   return originalFetch.apply(this, [url, options]);
 };
