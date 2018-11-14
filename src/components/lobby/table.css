@@ -22,7 +22,7 @@
 }
 .r-table:before{
   content: '';
-  background: url(/static/media/table.177b0d60.png) no-repeat 0px 0;
+  background: url(./table.png) no-repeat 0px 0;
   position: absolute;
   z-index: 0;
   top: 0;
