@@ -49,7 +49,9 @@ class TableView extends React.Component<Props, State> {
    */
   constructor(props) {
     super(props);
+    const timer = setInterval(() => this.getData(), 5000);
     this.state = {
+      timer,
       tableId: null,
       members: [],
       openActions: false,
@@ -143,6 +145,15 @@ class TableView extends React.Component<Props, State> {
       }
     });
   }
+  getData = () => {
+    const tableId = this.state.tableId || this.props.match.params.tableId;
+    fetch(`/api/table/${tableId}`)
+        .then(response => response.json())
+        .then(data => this.setState({ members: data.members, isLoading: false }));
+  }
+  componentWillUnmount(){
+    clearInterval(this.state.timer);
+  }
   /**
    * Called after component is mounted
    * @returns {void}
@@ -152,11 +163,9 @@ class TableView extends React.Component<Props, State> {
     if(tableId === 'new'){
       fetch(`/api/table/create`, {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: JSON.stringify({position: position})})
         .then(response => response.json())
-        .then(data => this.setState({ tables: this.updateTable(data), isLoading: false }));
+        .then(data => this.setState({ tableId: data._id, members: data.members, isLoading: false }));
     }else{
-      fetch(`/api/table/${tableId}`)
-        .then(response => response.json())
-        .then(data => this.setState({ tables: this.updateTable(data), isLoading: false }));
+      this.getData();
     }
   }
   updateTable = (table) => {

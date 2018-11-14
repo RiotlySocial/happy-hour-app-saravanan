@@ -22,13 +22,17 @@ class Lobby extends React.Component<Props, State> {
    */
   constructor(props) {
     super(props);
-    this.state = { isLoading: true, tables: this.getTables() };
+    const timer = setInterval(() => this.getUpdatedData(), 5000);
+    this.state = { isLoading: true, tables: this.getTables(), timer };
+    // this.setState({timer});
   }
-  getTables = (data = []) => {
+  getTables = (data) => {
+    if(data && data.reduce){
     data = data.reduce((obj, item) => {
       obj[item.position] = item
       return obj
     }, {});
+  }
     let arr = [];
     for(let i=0;i < 8; i++){
       if(data && data[i]){
@@ -39,14 +43,31 @@ class Lobby extends React.Component<Props, State> {
     }
     return arr;
   }
+  getUpdatedData = async () => {
+    const data = await fetch('/api/table/all')
+      .then(response => response.json());
+    this.setState({ tables: this.getTables(data), isLoading: false });
+
+  }
+  componentWillUnmount(){console.log(this.state.timer);
+    clearInterval(this.state.timer);
+  }
   /**
    * Called after component is mounted
    * @returns {void}
    */
   async componentDidMount() {
-    const data = await fetch('/api/table/all')
-      .then(response => response.json());
-    this.setState({ tables: this.getTables(data), isLoading: false })
+    this.getUpdatedData();
+    // const es = new window.EventSource(`${window.API_URL}/api/updates`);
+    
+    // es.addEventListener('connected', (e) => {
+    //   console.log(e.data);
+    //   // => Hello world!
+    // });
+    
+    // es.addEventListener("message", function(e) {
+    //   console.log(e.data);
+    // }, false);
   }
   getRandomKey = () => {
     return Math.random();
