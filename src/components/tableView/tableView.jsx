@@ -49,7 +49,7 @@ class TableView extends React.Component<Props, State> {
    */
   constructor(props) {
     super(props);
-    const timer = setInterval(() => this.getData(), 5000);
+    const timer = setInterval(() => this.getData(), 3000);
     this.state = {
       timer,
       tableId: null,
@@ -136,7 +136,8 @@ class TableView extends React.Component<Props, State> {
    */
   handleLeaveTable = () => {
     const { history } = this.props;
-    const { tableId } = this.state;
+    // const { tableId } = this.state;
+    const tableId = this.state.tableId || this.props.match.params.tableId
     fetch(`/api/table/leave/${tableId}`, {method: 'POST', headers: new Headers({'Content-Type': 'application/json'}), body: JSON.stringify({})})
     .then(response => response.json())
     .then(data => {
@@ -173,11 +174,11 @@ class TableView extends React.Component<Props, State> {
   }
   renderChatView = () => {
     const { members, openActions, actions } = this.state;
-    return <React.Fragment><List className="r-tv-screens">
+    return <React.Fragment><List className={`r-tv-screens r-tvs-${members.length}`}>
     {members.map((member, index) => (
       <ListItem className="r-tv-screen" key={index}>
         <ListItemAvatar>
-          <Avatar src={member.avatar} alt={member.first_name} />
+          <Avatar src={member.avatar + '0'} alt={member.first_name} />
         </ListItemAvatar>
       </ListItem>
     ))}
@@ -222,7 +223,7 @@ class TableView extends React.Component<Props, State> {
     const { members, openActions, actions, isLoading } = this.state;
     return (
       <Dialog
-        PaperProps={{ style: { background: 'transparent' } }}
+        PaperProps={{ style: { background: 'rgba(0, 0, 0, 0.95)' } }}
         fullScreen
         className="r-table-view"
         open

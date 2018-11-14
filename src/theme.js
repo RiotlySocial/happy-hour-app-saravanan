@@ -1,7 +1,7 @@
 // @flow
 import { createMuiTheme } from '@material-ui/core/styles';
 
-const boxShadow = '0 2px 12px 0 rgba(210,210,210,0.50)';
+const boxShadow = '0 0px 10px 4px rgba(210,210,210,0.50)';
 const theme = createMuiTheme({
   boxShadow,
   typography: {

@@ -22,7 +22,7 @@ class Lobby extends React.Component<Props, State> {
    */
   constructor(props) {
     super(props);
-    const timer = setInterval(() => this.getUpdatedData(), 5000);
+    const timer = setInterval(() => this.getUpdatedData(), 3000);
     this.state = { isLoading: true, tables: this.getTables(), timer };
     // this.setState({timer});
   }

@@ -46,7 +46,7 @@ class Table extends React.PureComponent<Props> {
           && <Avatar
             key={member._id}
             className={`r-avatar-${index}`}
-            src={member.avatar}
+            src={member.avatar + '0'}
             alt={member.first_name}
           />)}
       </div>

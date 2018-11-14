@@ -2,19 +2,35 @@
   display: flex;
   flex-wrap: wrap;
   justify-content: space-evenly;
+  padding-left: 6vw;
+  padding-top: 10vh;
+  padding-right: 8vw;
 }
 
 .r-table {
-  background: url(./table.png) no-repeat 0 0;
-  margin: 40px 10px;
-  background-size: contain;
-  height: 16vw;
-  flex-basis: 20%;
+  
+  margin-bottom: 20px;
+  height: 20vw;
+  /* width: 16vw; */
+  flex-basis: 25%;
   position: relative;
-  opacity: 0.8;
+  opacity: 1;
   cursor: pointer;
+  padding: 20px;
+  box-sizing: border-box;
+  position: relative;
 }
-
+.r-table:before{
+  content: '';
+  background: url(/static/media/table.177b0d60.png) no-repeat 0px 0;
+  position: absolute;
+  z-index: 0;
+  top: 0;
+  left: 0;
+  width: 92%;
+  height: 94%;
+  background-size: contain;
+}
 .r-table:hover {
   opacity: 1;
 }
@@ -33,26 +49,27 @@
 
 .r-table > div {
   position: absolute;
-  width: 6vw;
-  height: 6vw;
+  width: 7vw;
+  height: 7vw;
+  z-index: 1;
 }
 
 .r-table > div.r-avatar-0 {
-  left: 5vw;
+  left: 5.6vw;
   top: -1vw;
 }
 
 .r-table > div.r-avatar-1 {
-  top: 5vw;
-  left: -1vw;
+  top: 5.8vw;
+  left: -1.4vw;
 }
 
 .r-table > div.r-avatar-2 {
-  top: 12vw;
-  left: 5vw;
+  top: 13vw;
+  left: 6vw;
 }
 
 .r-table > div.r-avatar-3 {
-  left: 11vw;
-  top: 5vw;
+  left: 12.2vw;
+  top: 5.6vw;
 }
