@@ -18,6 +18,7 @@ import ListItemAvatar from '@material-ui/core/ListItemAvatar';
 import Dialog from '@material-ui/core/Dialog';
 import { Button, Tooltip } from '@material-ui/core';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import { withSnackbar } from 'notistack';
 import type { User } from '../../utils/types';
 import './tableView.css';
 
@@ -154,7 +155,27 @@ class TableView extends React.Component<Props, State> {
     const tableId = this.state.tableId || this.props.match.params.tableId;
     fetch(`/api/table/${tableId}`)
       .then(response => response.json())
-      .then(data => this.setState({ members: data.members, isLoading: false }));
+      .then((data) => {
+        this.checkUserActivity(data.members);
+        this.setState({ members: data.members, isLoading: false });
+      });
+  }
+
+  checkUserActivity = (newStateMembers = []) => {
+    const { enqueueSnackbar } = this.props;
+    let prevStateMembers = [...this.state.members] || [];
+
+    prevStateMembers = prevStateMembers.map(member => member.first_name);
+    newStateMembers = newStateMembers.map(member => member.first_name);
+
+    const newMembers = (newStateMembers.filter(mem => !prevStateMembers.some(prevMem => prevMem === mem)));
+    const leftMembers = (prevStateMembers.filter(mem => !newStateMembers.some(prevMem => prevMem === mem)));
+    if (newMembers.length) {
+      enqueueSnackbar(`${newMembers.join(',')} has joined the table.`);
+    }
+    if (leftMembers.length) {
+      enqueueSnackbar(`${leftMembers.join(',')} has left the table.`);
+    }
   }
 
   componentWillUnmount() {
@@ -171,20 +192,21 @@ class TableView extends React.Component<Props, State> {
       fetch('/api/table/create', { method: 'POST', headers: new Headers({ 'Content-Type': 'application/json' }), body: JSON.stringify({ position }) })
         .then(response => response.json())
         .then(data => this.setState({ tableId: data._id, members: data.members, isLoading: false }));
-    }else {
+    } else {
       this.getData();
     }
   }
-  getSpeeddialTip = () => {
-    return this.state.allActionsOff ? 'Turn on everything': 'Turn off everything';
-  }
+
+  getSpeeddialTip = () => this.state.allActionsOff ? 'Turn on everything': 'Turn off everything'
+
   updateTable = (table) => {
     this.setState({ tableId: table._id, members: table.members });
   }
 
   renderChatView = () => {
     const { members, openActions, actions } = this.state;
-    return (<React.Fragment><List className={`r-tv-screens r-tvs-${members.length}`}>
+    return (<React.Fragment>
+<List className={`r-tv-screens r-tvs-${members.length}`}>
     {members.map((member, index) => (
       <ListItem className="r-tv-screen" key={index}>
         <ListItemAvatar>
@@ -193,7 +215,7 @@ class TableView extends React.Component<Props, State> {
       </ListItem>
     ))}
   </List>
-  <div className="r-tv-actions">
+      <div className="r-tv-actions">
     <Button className="r-tv-leave" onClick={this.handleLeaveTable} color="primary" variant="contained">Leave table</Button>
     <Tooltip title={this.getSpeeddialTip()} placement="left-end">
       <SpeedDial
@@ -222,7 +244,7 @@ class TableView extends React.Component<Props, State> {
       </SpeedDial>
     </Tooltip>
   </div>
-  </React.Fragment>);
+    </React.Fragment>);
   }
 
   /**
@@ -249,4 +271,4 @@ class TableView extends React.Component<Props, State> {
   }
 }
 
-export default TableView;
+export default withSnackbar(TableView);

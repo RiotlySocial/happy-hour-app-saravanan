@@ -8,6 +8,7 @@
     "@material-ui/lab": "^3.0.0-alpha.23",
     "express": "^4.16.4",
     "immutable": "^4.0.0-rc.12",
+    "notistack": "^0.3.7",
     "query-string": "^6.2.0",
     "react": "^16.6.0",
     "react-dom": "^16.6.0",

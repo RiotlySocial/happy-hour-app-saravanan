@@ -4,6 +4,7 @@ import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
 import { createStore } from 'redux';
 import { MuiThemeProvider } from '@material-ui/core/styles';
+import { SnackbarProvider } from 'notistack';
 import rootReducer from './reducers';
 import App from './router/AppContainer';
 import * as serviceWorker from './serviceWorker';
@@ -36,9 +37,11 @@ window.fetch = (...args) => {
 
 ReactDOM.render(
   <Provider store={store}>
-    <MuiThemeProvider theme={theme}>
-      <App />
-    </MuiThemeProvider>
+    <SnackbarProvider maxSnack={2}>
+      <MuiThemeProvider theme={theme}>
+        <App />
+      </MuiThemeProvider>
+    </SnackbarProvider>
   </Provider>,
   el,
 );
