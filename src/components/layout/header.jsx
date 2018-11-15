@@ -14,7 +14,7 @@ import LeftNav from './leftNav';
 import type { User } from '../../utils/types';
 
 type Props = {
-  hasAuth: User,
+  hasAuth: {user: User, status: number},
   logoutUser: () => void,
 };
 type State = {
@@ -61,7 +61,7 @@ class Header extends React.Component<Props, State> {
     const { showLeftNav } = this.state;
     const { hasAuth, classes, logoutUser } = this.props;
     return (
-      <AppBar className="app-bar noShadow" color="inherit" position="static">
+      <AppBar style={{ paddingTop: 26 }} className="app-bar noShadow" color="inherit" position="static">
         <Toolbar>
           <Button className="app-menu" variant="fab" onClick={() => this.toggleLeftNav(true)} color="inherit" aria-label="Show Left Nav">
             <SubjectIcon fontSize="large" />
@@ -84,7 +84,7 @@ class Header extends React.Component<Props, State> {
           <span className={`${classes.shadow} app-signal`}>
             <SignalIcon fontSize="large" color="secondary" aria-label="Network connection status" />
           </span>
-          <Avatar className={`${classes.shadow} app-avatar`} alt={hasAuth.first_name} src={hasAuth.avatar} />
+          <Avatar className={`${classes.shadow} app-avatar`} alt={hasAuth.user.first_name} src={hasAuth.user.avatar} />
         </Toolbar>
       </AppBar>
     );

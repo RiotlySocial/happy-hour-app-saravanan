@@ -16,9 +16,9 @@ const mapStateToProps = state => ({ hasAuth: state.hasAuth });
    */
 const mapDispatchToProps = dispatch => ({
   loginUser: () => {
-    authLogin().then(user => dispatch(login(user)));
+    authLogin().then(user => dispatch(login(user, 1)));
   },
-  logoutUser: () => { authLogout().then(() => dispatch(logout())); },
+  logoutUser: () => { authLogout().then(() => dispatch(logout(2))); },
 });
 
 export default connect(

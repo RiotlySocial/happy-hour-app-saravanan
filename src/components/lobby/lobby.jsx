@@ -49,7 +49,7 @@ class Lobby extends React.Component<Props, State> {
     this.setState({ tables: this.getTables(data), isLoading: false });
 
   }
-  componentWillUnmount(){console.log(this.state.timer);
+  componentWillUnmount(){
     clearInterval(this.state.timer);
   }
   /**

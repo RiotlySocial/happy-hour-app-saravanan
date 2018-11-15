@@ -12,10 +12,7 @@ export function login(token: string) {
       window.localStorage.setItem('jwt', token);
       return response;
     })
-    .catch((error) => {
-      console.log(error);
-      return error;
-    });
+    .catch(error => error);
 }
 
 /**
@@ -29,8 +26,5 @@ export function logout() {
       window.localStorage.removeItem('jwt');
       return response;
     })
-    .catch((error) => {
-      console.log(error);
-      return error;
-    });
+    .catch(error => error);
 }

@@ -16,7 +16,7 @@ const mapStateToProps = state => ({ hasAuth: state.hasAuth });
    */
 const mapDispatchToProps = dispatch => ({
   loginUser: (token: string) => {
-    authLogin(token).then(user => dispatch(login(user)));
+    authLogin(token).then(user => dispatch(login(user, 1)));
   },
 });
 

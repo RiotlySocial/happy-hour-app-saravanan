@@ -7,6 +7,7 @@ import Card from '@material-ui/core/Card';
 import CardContent from '@material-ui/core/CardContent';
 import Typography from '@material-ui/core/Typography';
 import CircularProgress from '@material-ui/core/CircularProgress';
+import Icon from '@material-ui/core/Icon';
 
 type Props = {
   hasAuth: Object,
@@ -58,18 +59,26 @@ class Home extends React.Component<Props, State> {
   render() {
     const { hasAuth } = this.props;
     const { isLoading } = this.state;
-    if (hasAuth) {
+    if (hasAuth && hasAuth.status === 1) {
       return <Redirect to="/lobby" />;
     }
     return (
       <div className="r-home center">
         <Card className="r-home-card">
           <CardContent>
-            <Typography>Welcome to Happy Hour</Typography>
+            <Typography style={{width: '13em', margin: '0 auto'}}>
+              { hasAuth.status === 0
+                ? <span>Welcome to Happy Hour <span style={{ fontSize: "1.5em", verticalAlign: "middle" }} role="img" aria-label="Happy hour beer icon">🍻</span></span>
+                : <span>You successfully logged out. Want to go back to Happy Hour <span style={{ fontSize: "1.5em", verticalAlign: "text-top" }} role="img" aria-label="Happy hour beer icon">🍻</span>?</span>
+              }
+            </Typography>
             {
               isLoading
                 ? <CircularProgress />
-                : <Button href={`${window.API_URL}/api/auth/google`} color="primary" variant="contained" className="r-home-google">Log in with Google</Button>
+                : <Button href={`${window.API_URL}/api/auth/google`} color="primary" variant="contained" className="r-home-google">
+                  Log in with Google
+                  <Icon className="r-home-googleIcon" />
+                  </Button>
             }
           </CardContent>
         </Card>

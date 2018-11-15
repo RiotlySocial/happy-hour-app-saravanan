@@ -22,7 +22,7 @@ class PrivateRoute extends React.PureComponent<Props> {
 
     return (<Route
       {...rest}
-      component={componentProps => (hasAuth
+      component={componentProps => ((hasAuth && hasAuth.status === 1)
         ? <React.Fragment><Component {...componentProps} /></React.Fragment>
         : <Redirect to="/" />)}
     />);

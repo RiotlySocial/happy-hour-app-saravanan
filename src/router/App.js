@@ -40,8 +40,8 @@ class App extends React.PureComponent<Props> {
     return (
       <Router>
         <React.Fragment>
-          {hasAuth && <Header hasAuth={hasAuth} loginUser={loginUser} logoutUser={logoutUser} />}
-          <main style={ { height: (hasAuth ? '' : '100%') }}>
+          {hasAuth && (hasAuth.status === 1) && <Header hasAuth={hasAuth} loginUser={loginUser} logoutUser={logoutUser} />}
+          <main style={ { height: ((hasAuth && (hasAuth.status === 1)) ? '' : '100%') }}>
             <Switch>
               <PublicRoute exact path="/" component={Home} />
               <PrivateRoute path="/lobby" component={Lobby} />

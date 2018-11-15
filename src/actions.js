@@ -20,16 +20,19 @@ export const subCounter = (count: number) => ({
 
 /**
    * @param {Object} user user object
+    * @param {number} status auth status
    * @return {Object} Redux action.
    */
-export const login = (user: Object) => ({
+export const login = (user: Object, status: number) => ({
   type: 'LOGIN',
   user,
+  status,
 });
 /**
+  * @param {number} status auth status
    * @return {Object} Redux action.
    */
-export const logout = () => ({
+export const logout = (status: number) => ({
   type: 'LOGOUT',
-
+  status,
 });
