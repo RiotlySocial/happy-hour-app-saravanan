@@ -29,9 +29,8 @@ class Search extends React.Component<Props, State> {
    * @returns {void}
    */
   componentDidMount() {
-    const { query } = this.state;
     this.handleSearchDebounced = debounce(() => {
-      this.handleSearch.apply(this, [query]);
+      this.handleSearch.apply(this, []);
     }, 250);
   }
 
@@ -86,8 +85,8 @@ class Search extends React.Component<Props, State> {
   getResultContent = (item, result) => {
     let others = result.members && result.members.map(member => member.first_name) || null;
     // If more than 1 match, append those users as well
-    if (result.results.length > 1) {
-      others = [...others, ...result.results.filter(member => (member._id !== item._id)).map(member => member.first_name)];
+    if (result.matches.length > 1) {
+      others = [...others, ...result.matches.filter(member => (member._id !== item._id)).map(member => member.first_name)];
     }
     const othersString = (others && others.length) ? ` is talking with ${others.join(',')}` : '';
     return item.first_name + othersString;
@@ -133,9 +132,9 @@ class Search extends React.Component<Props, State> {
                 <Paper className={classes.paper} square>
                   {(results && results.length && isOpen) ? (
                     results.map((result) => {
-                      if (result.results) {
+                      if (result.matches) {
                         const tableId = result._id;
-                        return result.results
+                        return result.matches
                           .map((item, index) => <MenuItem
                             {...getItemProps({
                               key: item.pageid,
