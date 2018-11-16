@@ -1,7 +1,7 @@
 // @flow
 import React from 'react';
 import './table.css';
-import { Avatar } from '@material-ui/core';
+import { Avatar, Tooltip } from '@material-ui/core';
 import { withRouter } from 'react-router-dom';
 import type { User } from '../../utils/types';
 
@@ -29,7 +29,7 @@ class Table extends React.PureComponent<Props> {
   goToTableView = () => {
     const { members, history, tableId, position } = this.props;
     if (members.length < 4 && history) {
-      history.push(`/table-view/${tableId}/${position}`);
+      history.push(`/table-view/${tableId}?position=${position}`);
     }
   };
   
@@ -43,12 +43,12 @@ class Table extends React.PureComponent<Props> {
     return (
       <div className={`${hover} r-table`} onClick={this.goToTableView}>
         {members && members.map((member, index) => member
-          && <Avatar
+          && <Tooltip title={member.first_name}><Avatar
             key={member._id}
             className={`r-avatar-${index}`}
             src={member.avatar + '0'}
             alt={member.first_name}
-          />)}
+          /></Tooltip>)}
       </div>
     );
   }

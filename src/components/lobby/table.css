@@ -30,8 +30,9 @@
   width: 92%;
   height: 94%;
   background-size: contain;
+  opacity: 0.85;
 }
-.r-table:hover {
+.r-table:hover:before {
   opacity: 1;
 }
 

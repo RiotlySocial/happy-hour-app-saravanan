@@ -3,14 +3,12 @@ import * as React from 'react';
 import Button from '@material-ui/core/Button';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
-import SearchIcon from '@material-ui/icons/Search';
 import SignalIcon from '@material-ui/icons/SignalCellularAlt';
 import SubjectIcon from '@material-ui/icons/Subject';
 import Avatar from '@material-ui/core/Avatar';
-import Input from '@material-ui/core/Input';
-import InputAdornment from '@material-ui/core/InputAdornment';
 import { withStyles } from '@material-ui/core';
 import LeftNav from './leftNav';
+import Search from './search';
 import type { User } from '../../utils/types';
 
 type Props = {
@@ -68,17 +66,8 @@ class Header extends React.Component<Props, State> {
           </Button>
           <LeftNav showLeftNav={showLeftNav} toggleLeftNav={this.toggleLeftNav} logoutUser={logoutUser} />
           <form autoComplete="off">
-            <Input
-              startAdornment={
-                <InputAdornment position="start">
-                  <SearchIcon />
-                </InputAdornment>
-              }
-              className="r-search"
-              id="search"
-              type="search"
-              placeholder="Search your team..."
-            />
+            <Search />
+            
           </form>
           <div className="flex-grow" />
           <span className={`${classes.shadow} app-signal`}>

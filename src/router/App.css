@@ -34,18 +34,9 @@ main {
 }
 
 .r-search {
-  box-shadow: 0 0 8px 2px rgba(0, 0, 0, 0.1);
-  border-radius: 20px;
-  padding: 4px 0 1px 15px;
+  
 }
 
-.r-search::before,
-.r-search::after {
-  display: none;
-}
-.r-search input{
-  height: 1.575em;
-}
 .app-bar .app-menu {
   box-shadow: none;
   background: transparent;

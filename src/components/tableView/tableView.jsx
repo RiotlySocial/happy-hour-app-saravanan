@@ -2,6 +2,7 @@
 import React from 'react';
 import Avatar from '@material-ui/core/Avatar';
 import List from '@material-ui/core/List';
+import queryString from 'query-string';
 import ListItem from '@material-ui/core/ListItem';
 import VolumeIcon from '@material-ui/icons/VolumeUp';
 import VolumeOffIcon from '@material-ui/icons/VolumeOff';
@@ -187,7 +188,8 @@ class TableView extends React.Component<Props, State> {
    * @returns {void}
    */
   componentDidMount() {
-    const { tableId, position } = this.props.match.params;
+    const { tableId} = this.props.match.params;
+    const position = queryString.parse(window.location.search).position;
     if (tableId === 'new') {
       fetch('/api/table/create', { method: 'POST', headers: new Headers({ 'Content-Type': 'application/json' }), body: JSON.stringify({ position }) })
         .then(response => response.json())
@@ -210,7 +212,7 @@ class TableView extends React.Component<Props, State> {
     {members.map((member, index) => (
       <ListItem className="r-tv-screen" key={index}>
         <ListItemAvatar>
-          <Avatar src={member.avatar + '0'} alt={member.first_name} />
+          <Tooltip title={member.first_name}><Avatar src={member.avatar + '0'} alt={member.first_name} /></Tooltip>
         </ListItemAvatar>
       </ListItem>
     ))}
@@ -230,7 +232,7 @@ class TableView extends React.Component<Props, State> {
         onFocus={this.handleOpen}
         onMouseEnter={this.handleOpen}
         onMouseLeave={this.handleClose}
-        open={openActions}
+        open="true"
         direction="up"
       >
         {actions.map((action, index) => (
