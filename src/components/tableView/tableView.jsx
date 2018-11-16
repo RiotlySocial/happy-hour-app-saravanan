@@ -232,7 +232,7 @@ class TableView extends React.Component<Props, State> {
         onFocus={this.handleOpen}
         onMouseEnter={this.handleOpen}
         onMouseLeave={this.handleClose}
-        open="true"
+        open={openActions}
         direction="up"
       >
         {actions.map((action, index) => (
